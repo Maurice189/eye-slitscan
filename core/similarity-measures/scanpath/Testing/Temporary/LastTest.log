@@ -1,0 +1,145 @@
+Start testing: Jun 13 18:27 CEST
+----------------------------------------------------------
+1/2 Testing: sequence-gen-unit-test
+1/2 Test: sequence-gen-unit-test
+Command: "/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test/sequence-gen-unit-test"
+Directory: /home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test
+"sequence-gen-unit-test" start time: Jun 13 18:27 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 5 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 5 tests from VALIDITY_CHECK
+[ RUN      ] VALIDITY_CHECK.BASIC_FUNCTIONALITY
+Could not open test/res/01.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test/test.cc:55: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/01.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.BASIC_FUNCTIONALITY (0 ms)
+[ RUN      ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME
+Could not open test/res/02.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test/test.cc:79: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/02.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME (0 ms)
+[ RUN      ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES
+Could not open test/res/03.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test/test.cc:105: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/03.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES (0 ms)
+[ RUN      ] VALIDITY_CHECK.TEMPORAL_BINNING
+Could not open test/res/04.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test/test.cc:127: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/04.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.TEMPORAL_BINNING (0 ms)
+[ RUN      ] VALIDITY_CHECK.ARGUMENT_CHECK
+Could not open test/res/01.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/util/test/test.cc:143: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/01.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.ARGUMENT_CHECK (0 ms)
+[----------] 5 tests from VALIDITY_CHECK (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 5 tests, listed below:
+[  FAILED  ] VALIDITY_CHECK.BASIC_FUNCTIONALITY
+[  FAILED  ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME
+[  FAILED  ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES
+[  FAILED  ] VALIDITY_CHECK.TEMPORAL_BINNING
+[  FAILED  ] VALIDITY_CHECK.ARGUMENT_CHECK
+
+ 5 FAILED TESTS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Failed.
+"sequence-gen-unit-test" end time: Jun 13 18:27 CEST
+"sequence-gen-unit-test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: mscanpath-unit-test
+2/2 Test: mscanpath-unit-test
+Command: "/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test/mscanpath-unit-test"
+Directory: /home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test
+"mscanpath-unit-test" start time: Jun 13 18:27 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 5 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 5 tests from VALIDITY_CHECK
+[ RUN      ] VALIDITY_CHECK.BASIC_FUNCTIONALITY
+Could not open test/res/01.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test/test.cc:56: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/01.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.BASIC_FUNCTIONALITY (0 ms)
+[ RUN      ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME
+Could not open test/res/02.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test/test.cc:80: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/02.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME (1 ms)
+[ RUN      ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES
+Could not open test/res/03.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test/test.cc:106: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/03.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES (0 ms)
+[ RUN      ] VALIDITY_CHECK.TEMPORAL_BINNING
+Could not open test/res/04.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test/test.cc:128: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/04.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.TEMPORAL_BINNING (0 ms)
+[ RUN      ] VALIDITY_CHECK.ARGUMENT_CHECK
+Could not open test/res/01.xml
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/algorithms-slitscan-similarity/measures/scanpath/test/test.cc:144: Failure
+Value of: aoiImporter.parseViperFormattedXML("test/res/01.xml", dynamicAOIs, info)
+  Actual: false
+Expected: true
+Error reading export file
+[  FAILED  ] VALIDITY_CHECK.ARGUMENT_CHECK (0 ms)
+[----------] 5 tests from VALIDITY_CHECK (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 1 test case ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 5 tests, listed below:
+[  FAILED  ] VALIDITY_CHECK.BASIC_FUNCTIONALITY
+[  FAILED  ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME
+[  FAILED  ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES
+[  FAILED  ] VALIDITY_CHECK.TEMPORAL_BINNING
+[  FAILED  ] VALIDITY_CHECK.ARGUMENT_CHECK
+
+ 5 FAILED TESTS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Failed.
+"mscanpath-unit-test" end time: Jun 13 18:27 CEST
+"mscanpath-unit-test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 13 18:27 CEST

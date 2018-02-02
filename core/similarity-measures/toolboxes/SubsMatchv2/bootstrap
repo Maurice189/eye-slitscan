@@ -1,0 +1,22 @@
+#!/bin/bash
+sudo apt-get install gcc libz-dev libconfig8-dev libarchive-dev git automake autoconf libtool
+git clone https://github.com/rieck/sally.git
+cd sally/
+./bootstrap
+./configure
+make
+sudo make install
+cd ..
+./sally/src/sally
+
+git clone https://github.com/cjlin1/liblinear.git
+cd liblinear/
+make
+cd ..
+
+wget http://ilab.usc.edu/borji/Yarbus.zip
+unzip Yarbus.zip
+rm Yarbus.zip
+
+matlab -nodesktop -r run
+

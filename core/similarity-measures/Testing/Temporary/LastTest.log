@@ -1,0 +1,157 @@
+Start testing: Jun 14 22:58 CEST
+----------------------------------------------------------
+1/4 Testing: aoi_importer-unit-test
+1/4 Test: aoi_importer-unit-test
+Command: "/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/importer/aoi/test/aoi_importer-unit-test"
+Directory: /home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/importer/aoi/test
+"aoi_importer-unit-test" start time: Jun 14 22:58 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 5 tests from 2 test cases.
+[----------] Global test environment set-up.
+[----------] 3 tests from VALIDITY_CHECK
+[ RUN      ] VALIDITY_CHECK.FILE_OPEN_TEST
+Could not open non.xml
+[       OK ] VALIDITY_CHECK.FILE_OPEN_TEST (5 ms)
+[ RUN      ] VALIDITY_CHECK.FILE_FORMAT_TEST
+Object has no attribute 'id' !
+Could not open 02-malformed.xml
+[       OK ] VALIDITY_CHECK.FILE_FORMAT_TEST (8 ms)
+[ RUN      ] VALIDITY_CHECK.SOURCE_INFO_TEST
+[       OK ] VALIDITY_CHECK.SOURCE_INFO_TEST (3 ms)
+[----------] 3 tests from VALIDITY_CHECK (16 ms total)
+
+[----------] 2 tests from DATA_CHECK
+[ RUN      ] DATA_CHECK.BBOX_TEST
+[       OK ] DATA_CHECK.BBOX_TEST (4 ms)
+[ RUN      ] DATA_CHECK.OBJECT_TEST
+[       OK ] DATA_CHECK.OBJECT_TEST (3 ms)
+[----------] 2 tests from DATA_CHECK (7 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 2 test cases ran. (23 ms total)
+[  PASSED  ] 5 tests.
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"aoi_importer-unit-test" end time: Jun 14 22:58 CEST
+"aoi_importer-unit-test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/4 Testing: tobii_importer-unit-test
+2/4 Test: tobii_importer-unit-test
+Command: "/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/importer/eye-tracker-output/test/tobii_importer-unit-test"
+Directory: /home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/importer/eye-tracker-output/test
+"tobii_importer-unit-test" start time: Jun 14 22:58 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 2 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 2 tests from VALIDITY_CHECK
+[ RUN      ] VALIDITY_CHECK.ROW_DATA
+Too few columns in line 1149 in file "Tobii_exports/01-OK.tsv".
+Too few columns in line 1152 in file "Tobii_exports/02-OK.tsv".
+[       OK ] VALIDITY_CHECK.ROW_DATA (6 ms)
+[ RUN      ] VALIDITY_CHECK.FILE_FORMAT
+Too few columns in line 1149 in file "Tobii_exports/01-OK.tsv".
+Too few columns in line 1152 in file "Tobii_exports/02-OK.tsv".
+Error opening file : Tobii_exports/no.tsv
+[       OK ] VALIDITY_CHECK.FILE_FORMAT (5 ms)
+[----------] 2 tests from VALIDITY_CHECK (11 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test case ran. (11 ms total)
+[  PASSED  ] 2 tests.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"tobii_importer-unit-test" end time: Jun 14 22:58 CEST
+"tobii_importer-unit-test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: sequence-gen-unit-test
+3/4 Test: sequence-gen-unit-test
+Command: "/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/measures/util/test/sequence-gen-unit-test"
+Directory: /home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/measures/util/test
+"sequence-gen-unit-test" start time: Jun 14 22:58 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 6 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 6 tests from VALIDITY_CHECK
+[ RUN      ] VALIDITY_CHECK.REAL_TEST
+Too few columns in line 1502 in file "res/P9B-01-car pursuit.tsv".
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/measures/util/test/test.cc:61: Failure
+      Expected: stringSequence01
+      Which is: "#################################aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#######aaaaaaaaaaaaaaaaaaaa###########aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#############aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa###############aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#############aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#####################################################################################################################################aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa##############################################################################################aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa###aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#"
+To be equal to: "a#bbc#"
+Error : Wrong sequence string for sequence 01.
+[  FAILED  ] VALIDITY_CHECK.REAL_TEST (10 ms)
+[ RUN      ] VALIDITY_CHECK.BASIC_FUNCTIONALITY
+Too few columns in line 9 in file "res/01.tsv".
+[       OK ] VALIDITY_CHECK.BASIC_FUNCTIONALITY (0 ms)
+[ RUN      ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME
+Too few columns in line 9 in file "res/02.tsv".
+[       OK ] VALIDITY_CHECK.MULTIPLE_AOI_HITS_PER_FRAME (0 ms)
+[ RUN      ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES
+Too few columns in line 11 in file "res/03.tsv".
+[       OK ] VALIDITY_CHECK.AOI_ELEMENT_ACTIVE_IN_MULTIPLE_FRAMES (0 ms)
+[ RUN      ] VALIDITY_CHECK.TEMPORAL_BINNING
+Too few columns in line 6 in file "res/04.tsv".
+/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/measures/util/test/test.cc:157: Failure
+      Expected: stringSequence01
+      Which is: "a##"
+To be equal to: "a#ccccc"
+Error : Wrong sequence string for sequence 01.
+[  FAILED  ] VALIDITY_CHECK.TEMPORAL_BINNING (0 ms)
+[ RUN      ] VALIDITY_CHECK.ARGUMENT_CHECK
+Too few columns in line 9 in file "res/01.tsv".
+[       OK ] VALIDITY_CHECK.ARGUMENT_CHECK (0 ms)
+[----------] 6 tests from VALIDITY_CHECK (12 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test case ran. (12 ms total)
+[  PASSED  ] 4 tests.
+[  FAILED  ] 2 tests, listed below:
+[  FAILED  ] VALIDITY_CHECK.REAL_TEST
+[  FAILED  ] VALIDITY_CHECK.TEMPORAL_BINNING
+
+ 2 FAILED TESTS
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Failed.
+"sequence-gen-unit-test" end time: Jun 14 22:58 CEST
+"sequence-gen-unit-test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/4 Testing: mscanpath-unit-test
+4/4 Test: mscanpath-unit-test
+Command: "/home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/measures/scanpath/test/mscanpath-unit-test"
+Directory: /home/maurice/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/similarity-measures/measures/scanpath/test
+"mscanpath-unit-test" start time: Jun 14 22:58 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 2 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 2 tests from VALIDITY_CHECK
+[ RUN      ] VALIDITY_CHECK.LEVENSHTEIN
+[       OK ] VALIDITY_CHECK.LEVENSHTEIN (0 ms)
+[ RUN      ] VALIDITY_CHECK.NEEDLEMAN_WUNSCH
+[       OK ] VALIDITY_CHECK.NEEDLEMAN_WUNSCH (0 ms)
+[----------] 2 tests from VALIDITY_CHECK (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test case ran. (0 ms total)
+[  PASSED  ] 2 tests.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"mscanpath-unit-test" end time: Jun 14 22:58 CEST
+"mscanpath-unit-test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 14 22:58 CEST

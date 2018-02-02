@@ -1,0 +1,32 @@
+# Thomas Kuebler
+# thomas.kuebler(at)uni-tuebingen.de
+# University of Tuebingen
+# 2016
+
+== Installation ==
+Run the bootstrap file (will require sudo since some packages are installed to make sure all prerequisites are met).
+
+It will download and install all dependencies, namely:
+- sally (https://github.com/rieck/sally.git)
+- liblinear (https://github.com/cjlin1/liblinear.git)
+- Yarbus data (http://ilab.usc.edu/borji/Yarbus.zip)
+- some unix libraries and tools (gcc libz-dev libconfig8-dev libarchive-dev git automake autoconf libtool)
+
+Please note that these programs and data come with their own licenses and restrictions for use. This script can only collect them for your convenvience - the tools and data are not part of this script.
+
+Afterwards MATLAB will be started and the run.m file is executed.
+
+== What happens internally (SubsMatch2.0 ) ==
+The MATLAB script batchDefendingYarbus.m loads experiment data (Yarbus by Borji) and performs string conversion via the kernelSAX script. Resulting string-encoded scanpaths are saved to Yarbus/*.lines.
+In the next step batchDefendingYarbus.m invokes the sally program on these files and thereby constructs the subsequences, conuts and normalizes them. The results are saved to Yarbus/*.libsvm
+The last step is calling libLinear on these input features. Different alphabet and n-gram lengths are used to show the effect of parameter choice.
+
+== Troubleshooting ==
+The MATLAB mex compiler is used. you might need to configure it to use a MATLAB compatible GCC and g++ version.
+https://de.mathworks.com/help/matlab/matlab_external/changing-default-compiler.html
+You might need to install a GCC and G++ version 4.7 or earlier, e.g., sudo apt-get install gcc-4.7 g++-4.7
+In liblinear/matlab/make.m change the calls to mex (lines 13-16) to:
+mex -v GCC='/usr/bin/gcc-4.7 CFLAGS=...
+mex -v GCC='/usr/bin/gcc-4.7 CFLAGS=...
+mex -v GXX='/usr/bin/g++-4.7 CFLAGS=...
+mex -v GXX='/usr/bin/g++-4.7 CFLAGS=...

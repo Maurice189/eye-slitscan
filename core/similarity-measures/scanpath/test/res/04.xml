@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viper xmlns="http://lamp.cfar.umd.edu/viper" xmlns:data="http://lamp.cfar.umd.edu/viperdata">
+    <config>
+        <descriptor type="FILE" name="Information">
+            <attribute dynamic="false" type="dvalue" name="NUMFRAMES"/>
+            <attribute dynamic="false" type="dvalue" name="H-FRAME-SIZE"/>
+            <attribute dynamic="false" type="dvalue" name="V-FRAME-SIZE"/>
+        </descriptor>
+        <descriptor type="OBJECT" name="Red Car">
+            <attribute dynamic="true" type="bbox" name="BoundingBox"/>
+        </descriptor>
+        <descriptor type="OBJECT" name="White Car">
+            <attribute dynamic="true" type="bbox" name="BoundingBox"/>
+        </descriptor>
+    </config>
+    <data>
+        <sourcefile filename="01-car pursuit.avi">
+            <file id="0" name="Information">
+                <attribute name="NUMFRAMES">
+                    <data:dvalue value="3"/>
+                </attribute>
+                <attribute name="H-FRAME-SIZE">
+                    <data:dvalue value="1920"/>
+                </attribute>
+                <attribute name="V-FRAME-SIZE">
+                    <data:dvalue value="1080"/>
+                </attribute>
+            </file>
+            <object id="0" framespan="1:1" name="Object 01">
+                <attribute name="BoundingBox">
+                    <data:bbox width="100" x="0" y="0" height="100" framespan="1:1"/>
+                </attribute>
+            </object>
+            <object id="1" framespan="2:2" name="Object 02">
+                <attribute name="BoundingBox">
+                    <data:bbox width="100" x="100" y="100" height="100" framespan="2:2"/>             
+                </attribute>
+            </object>
+            <object id="2" framespan="3:3" name="Object 03">
+                <attribute name="BoundingBox">
+                    <data:bbox width="100" x="200" y="200" height="100" framespan="3:3"/> 
+                </attribute>
+            </object>
+        </sourcefile>
+    </data>
+</viper>
