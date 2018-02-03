@@ -1,7 +1,22 @@
 language: cpp
+
+# For C++11 support 
+sudo: required
+dist: trusty
+
 compiler:
-    -clang
-    -gcc
+    - clang
+    - gcc
 
 before_install:
-    -sudo apt-get install 
+    - sudo apt-get update -qq
+
+install:
+    - sudo apt-get install -qq build-essential
+    - sudo apt-get install -qq cmake
+    - sudo apt-get install -qq libopencv-dev
+      sudo apt-get install -qq qt5-default
+
+script:
+    - cmake .
+    - make
