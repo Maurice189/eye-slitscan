@@ -43,15 +43,11 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-project(ggs-vistool)
+project(eye-slitscan)
 
 include(CTest)
 
 add_subdirectory(core)
 add_subdirectory(gui)
-add_subdirectory(tools)
 
 target_include_directories(app PUBLIC core)
-#target_include_directories(aoi-debugger PUBLIC core/similarity-measures)
-#target_include_directories(eval-tool PUBLIC core/similarity-measures)
-target_include_directories(to-slitscan PUBLIC core/similarity-measures)
