@@ -2,6 +2,8 @@
 
 # eye-slitscan
 ![Teaser gif of tool in action](teaser.gif)
+
+# Description
 A visual analytics tool especially suitable for analyzing eye tracking data generated from dynamic stimuli.
 
 # License
@@ -17,8 +19,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 # Credits
 This software relies on the following third party projects.
-* [https://github.com/dbzhang800/QtOpenCV.git] - Copyright (c) 2012-2015 Debao Zhang <hello@debao.me>
-* [https://github.com/ben-strasser/fast-cpp-csv-parser.git] - Copyright (c) 2015, ben-strasser
-* [https://github.com/leethomason/tinyxml2.git] - Original code by Lee Thomason [www.grinninglizard.com]
+* (https://github.com/dbzhang800/QtOpenCV.git)[QtOpenCV] - Copyright (c) 2012-2015 Debao Zhang <hello@debao.me>
+* (https://github.com/ben-strasser/fast-cpp-csv-parser.git)[fast-cpp-csv-parser] - Copyright (c) 2015, ben-strasser
+* (https://github.com/leethomason/tinyxml2.git)[tinyxml2] - Original code by Lee Thomason www.grinninglizard.com
 
 
