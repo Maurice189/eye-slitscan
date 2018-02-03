@@ -1,4 +1,4 @@
-![ci-status](https://travis-ci.org/Maurice189/eye-slitscan.svg?branch=master)
+[![Build Status](https://travis-ci.org/Maurice189/eye-slitscan.svg?branch=master)](https://travis-ci.org/Maurice189/eye-slitscan)
 
 # eye-slitscan
 A visual analytics tool especially suitable for analyzing eye tracking data generated from dynamic stimuli.
