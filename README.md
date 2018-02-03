@@ -5,6 +5,19 @@
 
 # Description
 A visual analytics tool especially suitable for analyzing eye tracking data generated from dynamic stimuli.
+Gaze data of multiple viewers can be visualized and compared using the so called (gaze-guided) slit-scan technique. In the slit scan technique, individual strips of a visual stimulus are cut out and joined together along a timeline. The result is a compact and easily interpretable representation of the gaze behavior of a person. 
+For more information about this technique, we refer to this publication:
+
+Kurzhals, Kuno, and Daniel Weiskopf. "Visualizing eye tracking data with gaze-guided slit-scans." Eye Tracking and Visualization (ETVIS), IEEE Second Workshop on. IEEE, 2016.
+
+
+# Key Features
+
+* Visualization of gaze data based on the **(gaze-guided) slit-scan technique**
+and **gaze-replay**.
+* Comparing gaze data with **similarity measures**.
+* **Data-mining methods** and **auxiliary visual components** for better interpretation of similarity values.
+* Comparing results of clustering based on **dendrogram similarity**.
 
 # License
 eye-slitscan is released under the MIT-License
@@ -19,8 +32,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 # Credits
 This software relies on the following third party projects.
-* (https://github.com/dbzhang800/QtOpenCV.git)[QtOpenCV] - Copyright (c) 2012-2015 Debao Zhang <hello@debao.me>
-* (https://github.com/ben-strasser/fast-cpp-csv-parser.git)[fast-cpp-csv-parser] - Copyright (c) 2015, ben-strasser
-* (https://github.com/leethomason/tinyxml2.git)[tinyxml2] - Original code by Lee Thomason www.grinninglizard.com
+* [QtOpenCV](https://github.com/dbzhang800/QtOpenCV.git) - Copyright (c) 2012-2015 Debao Zhang <hello@debao.me>
+* [fast-cpp-csv-parser](https://github.com/ben-strasser/fast-cpp-csv-parser.git) - Copyright (c) 2015, ben-strasser
+* [tinyxml2](https://github.com/leethomason/tinyxml2.git) - Original code by Lee Thomason www.grinninglizard.com
 
+# Acknowledgement
+
+This project emerged as a part of a bachelor thesis at the [Visualisation Research Centre (VISUS)](https://www.visus.uni-stuttgart.de/index.en.html) which is a central institution of the University of Stuttgart. Many thanks goes to Kuno Kurzhals.
 
