@@ -17,7 +17,7 @@ before_install:
     - sudo apt-get install -qq qt59-meta-minimal
     - sudo apt-get install -qq qt59multimedia
     - sudo apt-get install -qq qt59charts-no-lgpl
-    - sudo apr-get install -qq libopencv3-dev
+    - sudo apt-get install -qq libopencv3-dev
 
 script:
     - source /opt/qt59/bin/qt59-env.sh
