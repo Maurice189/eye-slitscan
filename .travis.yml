@@ -10,6 +10,7 @@ compiler:
 
 before_install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt591-trusty
+    - sudo add-apt-repository --yes ppa:lkoppel/opencv
     - sudo apt-get update -qq
     - sudo apt-get install -qq build-essential
     - sudo apt-get install -qq cmake
@@ -17,20 +18,7 @@ before_install:
     - sudo apt-get install -qq qt59base
     - sudo apt-get install -qq qt59multimedia
     - sudo apt-get install -qq qt59charts-no-lgpl
-    - sudo apt-get install -qq libgtk2.0-dev
-    - sudo apt-get install -qq pkg-config
-    - sudo apt-get install -qq libavcodec-dev
-    - sudo apt-get install -qq libavformat-dev
-    - sudo apt-get install -qq libswscale-dev
-    - sudo apt-get install -qq python-dev
-    - sudo apt-get install -qq python-numpy
-    - sudo apt-get install -qq libtbb2
-    - sudo apt-get install -qq libtbb-dev
-    - sudo apt-get install -qq libjpeg-dev
-    - sudo apt-get install -qq libpng-dev
-    - sudo apt-get install -qq libtiff-dev
-    - sudo apt-get install -qq libjasper-dev
-    - sudo apt-get install -qq libdc1394-22-dev
+    - sudo apt-get install -qq opencv
 
 before_script:
   - curl -sL https://github.com/Itseez/opencv/archive/3.0.0.zip > opencv.zip
