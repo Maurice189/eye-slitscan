@@ -10,11 +10,11 @@ compiler:
 
 before_install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt591-trusty
-    - sudo add-apt-repository --yes ppa:orangain/opencv
+    - sudo add-apt-repository --yes ppa:amarburg/opencv3
     - sudo apt-get update -qq
     - sudo apt-get install -qq build-essential
     - sudo apt-get install -qq cmake
-    - sudo apt-get install -qq opencv
+    - sudo apt-get install -qq opencv3
     - sudo apt-get install -qq qt59-meta-minimal
     - sudo apt-get install -qq qt59base
     - sudo apt-get install -qq qt59multimedia
