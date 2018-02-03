@@ -1,6 +1,7 @@
 ![ci-status](https://travis-ci.org/Maurice189/eye-slitscan.svg?branch=master)
 
 # eye-slitscan
+![Teaser gif of tool in action](teaser.gif)
 A visual analytics tool especially suitable for analyzing eye tracking data generated from dynamic stimuli.
 
 # License
