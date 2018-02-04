@@ -25,7 +25,7 @@ and **gaze-replay**.
 
 This tool run successfully on Arch-Linux and Ubuntu (Trusty Tahr) as well as on OSX (High Sierra).
 Though it should work on Windows just as fine. You just have to make sure that the following 
-librarys/frameworks are installed on your machine.
+libraries/frameworks are installed on your machine.
 
 * Qt5 application framework. Please make sure that your Qt version contains the **Qt5Multimedia, Qt5MultimediaWidgets and Qt5Charts** modules.
 * OpenCV library (version >= 3.0).
