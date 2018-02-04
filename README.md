@@ -19,6 +19,25 @@ and **gaze-replay**.
 * **Data-mining methods** and **auxiliary visual components** for better interpretation of similarity values.
 * Comparing results of clustering based on **dendrogram similarity**.
 
+# Installing
+
+## Prerequisites
+
+This tool run successfully on Arch-Linux and Ubuntu (Trusty Tahr) as well as on OSX (High Sierra).
+Though it should work on Windows just as fine. You just have to make sure that the following 
+librarys/frameworks are installed on your machine.
+
+* Qt5 application framework. Please make sure that your Qt version contains the **Qt5Multimedia, Qt5MultimediaWidgets and Qt5Charts** modules.
+* OpenCV library (version >= 3.0).
+
+In addtion you need CMake (version >= 2.8) for cross-platform building.
+
+
+## Building
+
+Simply execute `cmake . && make` in the root directory of this project. If the build process succeeded, you can 
+find the exectuable in the `gui/` folder.
+
 # License
 eye-slitscan is released under the MIT-License
 
@@ -32,11 +51,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 # Credits
 This software relies on the following third party projects.
+* [Qt](https://github.com/qt) -  (C) 2015 The Qt Company Ltd.
+* [OpenCV](https://github.com/opencv/opencv) - Copyright (C) 2000-2018, Multiple authors, all rights reserved.
 * [QtOpenCV](https://github.com/dbzhang800/QtOpenCV.git) - Copyright (c) 2012-2015 Debao Zhang <hello@debao.me>
 * [fast-cpp-csv-parser](https://github.com/ben-strasser/fast-cpp-csv-parser.git) - Copyright (c) 2015, ben-strasser
 * [tinyxml2](https://github.com/leethomason/tinyxml2.git) - Original code by Lee Thomason www.grinninglizard.com
 
 # Acknowledgement
 
-This project emerged as a part of a bachelor thesis at the [Visualisation Research Centre (VISUS)](https://www.visus.uni-stuttgart.de/index.en.html) which is a central institution of the University of Stuttgart. Many thanks goes to Kuno Kurzhals.
+This project emerged as a part of a bachelor thesis at the [Visualisation Research Centre (VISUS)](https://www.visus.uni-stuttgart.de/index.en.html) which is a central institution of the University of Stuttgart. Many thanks goes to Kuno Kurzhals for his great supervision.
 
