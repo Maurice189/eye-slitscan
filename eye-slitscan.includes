@@ -18,4 +18,16 @@ core/similarity-measures/scanpath/include/gtest/internal/custom
 core/similarity-measures/trajectory/include
 core/similarity-measures/util/include
 core/slitscan-generator/include
+googletest/googletest-src/googlemock/include/gmock
+googletest/googletest-src/googlemock/include/gmock/internal
+googletest/googletest-src/googlemock/include/gmock/internal/custom
+googletest/googletest-src/googlemock/test
+googletest/googletest-src/googletest/include/gtest
+googletest/googletest-src/googletest/include/gtest/internal
+googletest/googletest-src/googletest/include/gtest/internal/custom
+googletest/googletest-src/googletest/samples
+googletest/googletest-src/googletest/src
+googletest/googletest-src/googletest/test
+googletest/googletest-src/googletest/xcode/Samples/FrameworkSample
 gui
+gui/app_autogen/include

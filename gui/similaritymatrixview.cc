@@ -73,6 +73,34 @@ void SimilarityMatrixView::wheelEvent ( QWheelEvent * event )
     anim->start();
 }
 
+
+void SimilarityMatrixView::keyPressEvent(QKeyEvent* event)
+{
+   int numSteps;
+   switch (event->key())
+   {
+   case Qt::Key_Plus:
+       numSteps = 1;
+       break;
+   case Qt::Key_Minus:
+       numSteps = -1;
+       break;
+   }
+    std::cout << "numsteps:" << numSteps << std::endl;
+   _numScheduledScalings += numSteps;
+   if (_numScheduledScalings * numSteps < 0) // if user moved the wheel in another direction, we reset previously scheduled scalings
+       _numScheduledScalings = numSteps;
+
+   QTimeLine *anim = new QTimeLine(350, this);
+   anim->setUpdateInterval(20);
+
+   connect(anim, SIGNAL (valueChanged(qreal)), SLOT (scalingTime(qreal)));
+   connect(anim, SIGNAL (finished()), SLOT (animFinished()));
+   anim->start();
+   // Otherwise pass to QGraphicsView.
+   QGraphicsView::keyPressEvent(event);
+}
+
 void SimilarityMatrixView::scalingTime(qreal x)
 {
     qreal factor = 1.0+ qreal(_numScheduledScalings) / 300.0;

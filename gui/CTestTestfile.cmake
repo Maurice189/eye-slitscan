@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/kochme/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/vis-tool/gui
-# Build directory: /home/kochme/Dokumente/Uni/Bachelorarbeit/Bachelorarbeit/vis-tool/gui
+# Source directory: /Users/kochme/Projekte/eye-slitscan/gui
+# Build directory: /Users/kochme/Projekte/eye-slitscan/gui
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
