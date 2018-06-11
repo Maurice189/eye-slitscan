@@ -23,14 +23,14 @@ and **gaze-replay**.
 
 ## Prerequisites
 
-This tool run successfully on Arch-Linux and Ubuntu (Trusty Tahr) as well as on OSX (High Sierra).
-Though it should work on Windows just as fine. You just have to make sure that the following 
-libraries/frameworks are installed on your machine.
+Currently I only can recommend Linux (Arch-Linux and Ubuntu worked) for running this application.
+One reason is that the QT5-MultimediaModulue seems to have major problems on MacOS. For Windows systems I can not speak at this moment, but I'll give it a try in the future.
 
+Things you need to have installed on your system:
+
+* CMake (version >= 2.8).
 * Qt5 application framework. Please make sure that your Qt version contains the **Qt5Multimedia, Qt5MultimediaWidgets and Qt5Charts** modules.
 * OpenCV library (version >= 3.0).
-
-In addtion you need CMake (version >= 2.8) for cross-platform building.
 
 
 ## Building
