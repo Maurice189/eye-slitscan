@@ -2,6 +2,7 @@
 #define SLTISCANVIDEO_H
 
 #include "constants.h"
+#include "participant.h"
 
 #include <QObject>
 #include <QList>
@@ -26,7 +27,7 @@ public:
     SlitscanVideo(int width, int height, QGraphicsItem *parent=0);
     void setSlits(QList<int> slitPosX);
     void setShowLabelsEnabled(bool labelsEnabled);
-    void drawGazeData(QList<ParticipantData> participants, int pos, int drawMode);
+    void drawGazeData(std::vector<Participant> participants, int pos, int drawMode);
     void setSourceInfo(const VideoInfo &srcInfo);
     void redraw(void);
 protected:

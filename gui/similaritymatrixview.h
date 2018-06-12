@@ -45,7 +45,6 @@ private:
 
     void updateBoxes();
 protected:
-    virtual void wheelEvent (QWheelEvent * event ) override;
     virtual void keyPressEvent(QKeyEvent* event) override;
 private:
     int baseColorIndex;

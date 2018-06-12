@@ -21,6 +21,7 @@
 #include "screenshot.h"
 
 #include "../core/clustering/copheneticcorrelation.h"
+#include "scanpath_clustering.h"
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -551,7 +552,7 @@ void MainWindow::participantsTreeItemChanged(QTreeWidgetItem *item, int column)
     checkedParticipants.clear();
     for(int i = 0; i < participants.size(); ++i) {
         if(pariticpantItems[i]->checkState(0) == Qt::Checked) {
-            checkedParticipants.append(participants[i]);
+            checkedParticipants.push_back(participants[i]);
             slitScanItems[i]->show();
             slitScanItems[i]->setY(visibleIndex * (slitscanHeight + 10));
             visibleIndex++;
@@ -572,42 +573,15 @@ void MainWindow::participantsTreeItemChanged(QTreeWidgetItem *item, int column)
 void MainWindow::keyReleaseEvent(QKeyEvent * event)
 {
     if (event->key() == Qt::Key_Minus) {
-        //emit ui->zoomFactor->stepDown();
         if (zoomFactor > -19) {
             zoomFactor--;
             zoomingFactorChanged(zoomFactor);
         }
     }
     if (event->key() == Qt::Key_Plus) {
-        //emit ui->zoomFactor->stepUp();
         if (zoomFactor < 19) {
             zoomFactor++;
             zoomingFactorChanged(zoomFactor);
-        }
-    }
-    /*
-    if(event->key() == Qt::Key_Escape) {
-        slitscanModeSelection(0);
-        ui->modeSelector->setCurrentIndex(0);
-    }
-    */
-    if (event->key() == Qt::Key_Delete) {
-        auto selectedItems = ui->measuresTree->selectedItems();
-        for(auto item : selectedItems) {
-            int found = 0;
-            int index = -1;
-            for(int i = 0; i < addedMeasures.size(); i++) {
-                if (addedMeasures[i].title == item->text(0)) {
-                    found++;
-                    index = i;
-                }
-            }
-            assert(found == 1);
-            std::cout << "REMOVE MEASURE :: " << addedMeasures[index].title.toStdString() << std::endl;
-            addedMeasures.removeAt(index);
-            measureItems.removeAt(index);
-            ui->clusteringCombo->removeItem(index);
-            delete item;
         }
     }
     QMainWindow::keyReleaseEvent(event);
@@ -616,7 +590,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent * event)
 void MainWindow::boxInMatrixSelected(QPair<QString, QString> ids, QString method, QString value)
 {
     for(int i = 0; i < participants.size(); ++i) {
-        ParticipantData &data = participants[i];
+        Participant &data = participants[i];
 
         int from = currentClusteringState.info.from;
         int to = currentClusteringState.info.to;
@@ -718,15 +692,6 @@ bool MainWindow::loadAOIData(const std::string aoiAbsPath)
         return false;
     }
 
-    //QFileInfo info(QString::fromStdString(aoiAbsPath));
-    //auto videoAbsPath = info.absolutePath() + "/" + QString::fromStdString(sourceInfo.filename);
-
-    //stimuliSource = videoAbsPath.toStdString();
-    //stimuliSet = true;
-
-    //videoInfo = SlitscanGenerator::readVideoInfo(stimuliSource);
-    //setVideoSource(stimuliSource);
-
     return true;
 }
 bool MainWindow::loadStimulus(const std::string stimulusPath)
@@ -770,11 +735,12 @@ void MainWindow::addParticipant()
                 label = label.left(5);
             }
 
-            ParticipantData data = createDataOfParticipant(info, label);
+            Participant data = Participant(dynamicAOIs, videoInfo, stimuliSource);
+            data.load(info.absoluteFilePath().toStdString(), label.toStdString(), participants.size(), slitscanHeight);
             std::cout << " Add Participant - " << participants.size() << " : " << label.toStdString() << std::endl;
 
             participants.push_back(data);
-            checkedParticipants.append(data);
+            checkedParticipants.push_back(data);
 
             addSlitScan(data.imgSlitscan, label, checkedParticipants.size() - 1);
 
@@ -938,41 +904,19 @@ void MainWindow::executeClustering()
     }
     assert(clusteringMethodChecked);
 
-    ClusterInfo info;
-    info.info = currentMeasure;
-    info.from = xRange.first;
-    info.to = xRange.second;
-
-    auto similarityMatrix = createSimilarityMatrix(currentMeasure, xRange);
-
-    clu::CSimilarityMatrix matrix;
-    matrix.elements = similarityMatrix.elements;
-
-    for (auto label : similarityMatrix.labels) {
-        matrix.labels.push_back(label.toStdString());
-    }
-
-    Clustering clustering(matrix, clusteringMethod);
-    ClusteringResult result = clustering.executeHAC();
-
     bool uniform = (ui->uniformScaleCheck->checkState() == Qt::Checked);
 
-    ClusteringStateData clusteringState;
-
-    clusteringState.matrix = createSimilarityMatrix(currentMeasure, xRange);
-    clusteringState.matrix.name = currentMeasure.title;
-    clusteringState.info = info;
-    clusteringState.result = result;
-
+    // GET CLUSTERING STATE
+    ClusteringStateData clusteringState = ScanpathClustering().execute(checkedParticipants, currentMeasure, clusteringMethod, xRange);
     clusteringsData.append(clusteringState);
 
     HistoryListItem *item = new HistoryListItem(clusteringState, 320, 100);
     ui->historyList->insertItem(0, item);
 
     if (uniform) {
-        item->draw(Clustering::createUniformClustering(result));
+        item->draw(Clustering::createUniformClustering(clusteringState.result));
     } else {
-        item->draw(result);
+        item->draw(clusteringState.result);
     }
 
     stateActive = true;
@@ -1003,237 +947,6 @@ void MainWindow::setStimulus()
     loadStimulus(info.absoluteFilePath().toStdString());
 }
 
-ParticipantData MainWindow::createDataOfParticipant(const QFileInfo &tsvFile, const QString &label)
-{
-    if (!stimuliSet) {
-        throw std::invalid_argument("Please load first : AOI+Stimulus - XML File");
-    }
-    ParticipantData data;
-    TobiiImporter importer;
-
-    if (!importer.read(tsvFile.absoluteFilePath().toStdString(), data.exportData, false)) {
-        throw std::invalid_argument("Error - While parsing " + tsvFile.baseName().toStdString() + " - Please check your file !");
-    }
-
-    SlitscanGenerator slitscanGenerator;
-    slitscanGenerator.createVisualization(stimuliSource, data.exportData);
-
-    cv::Mat mat = slitscanGenerator.getVC123();
-    QImage image = QImage((unsigned char*) mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGBA8888).rgbSwapped();
-
-    mat = slitscanGenerator.getVC1();
-    QImage imgSpectrogram = QImage((unsigned char*) mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGBA8888).rgbSwapped();
-
-    data.color = COLORS[participants.size() % COLORS.size()];
-    data.id = label;
-
-    data.insertIndex = participants.size();
-    //data.aoiStringWTB = fixationToSequenceDynamic(data.exportData, dynamicAOIs, videoInfo.fpms, false);
-    data.aoiStringWTB = gazeSequenceToString(data.exportData, dynamicAOIs, videoInfo.fpms);
-
-    data.matVC123 = slitscanGenerator.getVC123();
-    data.matSlitscan = slitscanGenerator.getVC123();
-    data.imgSlitscan = QPixmap::fromImage(image.scaled(image.width(), slitscanHeight, Qt::IgnoreAspectRatio));
-    data.imgSpectrogram = imgSpectrogram;
-
-    return data;
-}
-
-SimilarityMatrix MainWindow::createSimilarityMatrix(MeasureInformation measure, QPair<int, int> xRange)
-{
-    SimilarityMatrix similarityMatrix;
-    std::vector<TimeSpanData> spansFromParticipants;
-
-    for(int i = 0; i < checkedParticipants.size(); ++i) {
-        ParticipantData &data = checkedParticipants[i];
-
-        auto begin = data.exportData.begin() + xRange.first;
-        auto end = data.exportData.begin() + xRange.second;
-        auto exportData = std::vector<TobiiExportData>(begin, end);
-
-        TimeSpanData timeSpanData;
-        timeSpanData.aoiStringWTB = data.aoiStringWTB.substr(xRange.first, xRange.second - xRange.first);
-        timeSpanData.aoiString = mergeByFixationIndex(timeSpanData.aoiStringWTB, exportData);
-        timeSpanData.trajectoryOfGazes = createTrajectoryFromGazeData(exportData);
-        timeSpanData.trajectoryOfFixations = createTrajectoryFromFixationData(exportData);
-        timeSpanData.slitscan = data.matSlitscan(cv::Rect(xRange.first, 0, xRange.second-xRange.first, data.matSlitscan.rows)).clone();
-
-        spansFromParticipants.push_back(timeSpanData);
-
-        std::cout << data.id.toStdString() << " binning : " << timeSpanData.aoiStringWTB << std::endl;
-        std::cout << data.id.toStdString() << " merged : " << timeSpanData.aoiString << std::endl;
-    }
-
-    for(int i = 0; i < checkedParticipants.size(); ++i) {
-        std::vector<double> column;
-        column.resize(checkedParticipants.size());
-        similarityMatrix.elements.push_back(column);
-    }
-
-    for(int i = 0; i < checkedParticipants.size(); ++i) {
-        similarityMatrix.labels.append(checkedParticipants[i].id);
-        for(int j = i+1; j < checkedParticipants.size(); ++j) {
-            double score = calculateSimilarityScore(spansFromParticipants[i], spansFromParticipants[j], measure);
-            similarityMatrix.elements[i][j] = score;
-            similarityMatrix.elements[j][i] = score;
-        }
-    }
-
-    createPositiveMatrix(similarityMatrix.elements);
-
-    // Invert values, if necessary
-    if (measure.invertValues) {
-        invertMatrix(similarityMatrix.elements);
-    }
-
-    normalizeMatrix(similarityMatrix.elements);
-
-    similarityMatrix.info = measure;
-    return similarityMatrix;
-}
-
-double MainWindow::calculateSimilarityScore(const TimeSpanData &p1Data, const TimeSpanData &p2Data, MeasureInformation measure)
-{
-    switch (measure.measure) {
-    case SimilarityMeasure::DTW:
-    {
-        assert(measure.properties.find("REPRESENTATION") != measure.properties.end());
-        auto propRepresentation = measure.properties["REPRESENTATION"];
-
-        if (propRepresentation == "FIXATIONS") {
-            return distanceDTW(p1Data.trajectoryOfFixations, p2Data.trajectoryOfFixations, false);
-        } else if (propRepresentation == "GAZE-POINTS") {
-            return distanceDTW(p1Data.trajectoryOfGazes, p2Data.trajectoryOfGazes, false);
-        } else {
-            assert(false);
-        }
-    }
-        break;
-    case SimilarityMeasure::FRECHET:
-    {
-        assert(measure.properties.find("REPRESENTATION") != measure.properties.end());
-        auto propRepresentation = measure.properties["REPRESENTATION"];
-
-        if (propRepresentation == "FIXATIONS") {
-            return discreteFrechetDistance(p1Data.trajectoryOfFixations, p2Data.trajectoryOfFixations);
-        } else if (propRepresentation == "GAZE-POINTS") {
-            return discreteFrechetDistance(p1Data.trajectoryOfGazes, p2Data.trajectoryOfGazes);
-        } else {
-            assert(false);
-        }
-    }
-        break;
-    case SimilarityMeasure::LEVENSHTEIN:
-    {
-        assert(measure.properties.find("TEMPORAL-BINNING") != measure.properties.end());
-        auto propTemporalBinning = measure.properties["TEMPORAL-BINNING"];
-
-        if (propTemporalBinning == "YES") {
-            return levenshteinDistance(p1Data.aoiStringWTB, p2Data.aoiStringWTB);
-        } else if (propTemporalBinning == "NO"){
-            return levenshteinDistance(p1Data.aoiString, p2Data.aoiString);
-        } else {
-            assert(false);
-        }
-    }
-        break;
-    case SimilarityMeasure::NEEDLEMAN_WUNSCH:
-    {
-        assert(measure.properties.find("TEMPORAL-BINNING") != measure.properties.end());
-        auto propTemporalBinning = measure.properties["TEMPORAL-BINNING"];
-
-        assert(measure.properties.find("SCORING") != measure.properties.end());
-        auto propSubstMt = measure.properties["SCORING"];
-
-        std::function<int(char, char)> subWeights;
-
-        if (propSubstMt.left(8) == "STANDARD") {
-            std::cout << "Use Standard Substituiton Matrix" << std::endl;
-            subWeights = [](char a, char b) {
-                if(a == b)
-                    return 1;
-                return -1;
-            };
-        } else if (propSubstMt.left(9) == "BENCHMARK") {
-            int benchmarkID = propSubstMt.right(2).toInt();
-            assert(benchmarkID >= 1 && benchmarkID <= 11);
-            std::cout << "Use Substituiton Matrix of benchmark data : " << benchmarkID << std::endl;
-            subWeights = SUBSTITUTION_MATRICES[benchmarkID-1];
-        } else {
-            assert(false);
-        }
-
-        if (propTemporalBinning == "YES") {
-            return needlemanWunschScore(p1Data.aoiStringWTB, p2Data.aoiStringWTB, subWeights, -1);
-        } else if (propTemporalBinning == "NO"){
-            return needlemanWunschScore(p1Data.aoiString, p2Data.aoiString, subWeights, -1);
-        } else {
-            assert(false);
-        }
-    }
-        break;
-    case SimilarityMeasure::HISTOGRAM:
-    {
-        assert(measure.properties.find("COLOR-SPACE") != measure.properties.end());
-        assert(measure.properties.find("METRIC") != measure.properties.end());
-
-        auto propMetric = measure.properties["METRIC"];
-        auto propColorSpace = measure.properties["COLOR-SPACE"];
-
-        HistogramMetric metric;
-        ColorSpace colorSpace;
-
-        if (propMetric == "BHATTACHARYYA") {
-            metric = HistogramMetric::BHATTACHARYYA;
-        } else if (propMetric == "INTERSECTION") {
-            metric = HistogramMetric::INTERSECTION;
-        } else if (propMetric == "CORRELATION") {
-            metric = HistogramMetric::CORRELATION;
-        } else if (propMetric == "CHI_SQUARE") {
-            metric = HistogramMetric::CHI_SQUARE;
-        } else if (propMetric == "EMD") {
-            metric = HistogramMetric::EMD;
-        } else {
-            assert(false);
-        }
-
-        if (propColorSpace == "RGB") {
-            colorSpace = ColorSpace::RGB;
-        } else if (propColorSpace == "HSV") {
-            colorSpace = ColorSpace::HSV;
-        } else if (propColorSpace == "LAB") {
-            colorSpace = ColorSpace::CIE_LAB;
-        } else {
-            assert(false);
-        }
-
-        return histogramScore(p1Data.slitscan, p2Data.slitscan, metric, colorSpace);
-    }
-        break;
-    case SimilarityMeasure::IMAGE2D:
-    {
-        assert(measure.properties.find("METRIC") != measure.properties.end());
-        auto propMetric = measure.properties["METRIC"];
-
-        ImageMetric metric;
-
-        if (propMetric == "SQUARED_DIFFERENCES") {
-            metric = ImageMetric::SQUARED_DIFFERENCES;
-        } else if (propMetric == "COSINE_COEFFICIENT") {
-            metric = ImageMetric::COSINE_COEFFICIENT;
-        } else if (propMetric == "CROSS_CORRELATION") {
-            metric = ImageMetric::CROSS_CORRELATION;
-        } else {
-            assert(false);
-        }
-        return imageScore(p1Data.slitscan, p2Data.slitscan, metric);
-    }
-        break;
-    default:
-        assert(false);
-        break;
-    }
-}
 
 void MainWindow::addMeasure(const MeasureInformation &info)
 {

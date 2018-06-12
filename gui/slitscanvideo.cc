@@ -79,7 +79,7 @@ void SlitscanVideo::setShowLabelsEnabled(bool labelsEnabled)
 }
 
 
-void SlitscanVideo::drawGazeData(QList<ParticipantData> participants, int pos, int drawMode)
+void SlitscanVideo::drawGazeData(std::vector<Participant> participants, int pos, int drawMode)
 {
     this->data.clear();
 

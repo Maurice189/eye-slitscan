@@ -281,6 +281,7 @@ gui/interactivelineitem.h
 gui/main.cc
 gui/mainwindow.cc
 gui/mainwindow.h
+gui/mainwindow.ui
 gui/mainwindow_autogen/mocs_compilation.cpp
 gui/mainwindow_automoc.cpp
 gui/measuretreeitem.cc
@@ -300,9 +301,13 @@ gui/moc_slitscanvideo.cpp
 gui/moc_slitscanview.cpp
 gui/moc_timespanhandle.cpp
 gui/moc_timespanselector.cpp
+gui/participant.cc
+gui/participant.h
 gui/qrc_style.cpp
 gui/representationview.cc
 gui/representationview.h
+gui/scanpath_clustering.cc
+gui/scanpath_clustering.h
 gui/screenshot.cc
 gui/screenshot.h
 gui/similaritymatrixview.cc

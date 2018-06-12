@@ -31,6 +31,7 @@
 #include "csvexport.h"
 #include "constants.h"
 #include "representationview.h"
+#include "participant.h"
 
 
 namespace Ui {
@@ -128,6 +129,7 @@ private:
     bool chooseSubstitutionMatrix(MeasureInformation &info);
     QPair<int, int> getHandleSpanXRange();
 
+    int numberOfActiveParticipants();
     bool correlationCompatibleClusteringStates(const ClusteringStateData &d1, const ClusteringStateData &d2);
     bool equalClusteringStates(const ClusteringStateData &d1, const ClusteringStateData &d2);
 
@@ -163,12 +165,13 @@ private:
 
     std::vector<SlitscanItem*> slitScanItems;
     std::vector<struct DynamicAOI> dynamicAOIs;
-    std::vector<ParticipantData> participants;
+
+    std::vector<Participant> participants;
+    std::vector<Participant> checkedParticipants;
 
     QList<ClusteringStateData> clusteringsData;
     QList<QTreeWidgetItem *> measureItems;
     QList<QTreeWidgetItem *> pariticpantItems;
-    QList<ParticipantData> checkedParticipants;
     QList<MeasureInformation> addedMeasures;
 
     RepresentationViewerObject* rvoP1;
