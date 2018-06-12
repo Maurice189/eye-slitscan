@@ -40,6 +40,7 @@ set ( MOC_HEADERS
     slitscanvideo.h
     similaritymatrixview.h
     screenshot.h
+    participantmanager.h
     historylistwidget.h
     representationview.h
     )

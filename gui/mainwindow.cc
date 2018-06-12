@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QThread>
 #include <QScrollBar>
 #include <QDesktopWidget>
 #include <clustering/include/hac.h>
@@ -116,6 +117,10 @@ MainWindow::MainWindow(QWidget *parent) :
             player->pause();
         }
     });
+
+
+    pManager = new ParticipantManager();
+    pManager->setSlitscanHeight(slitscanHeight);
 
     rvoP1 = new RepresentationViewerObject(ui->leftP);
     rvoP2 = new RepresentationViewerObject(ui->rightP);
@@ -692,6 +697,8 @@ bool MainWindow::loadAOIData(const std::string aoiAbsPath)
         return false;
     }
 
+    pManager->setDynamicAOIs(dynamicAOIs);
+
     return true;
 }
 bool MainWindow::loadStimulus(const std::string stimulusPath)
@@ -704,6 +711,9 @@ bool MainWindow::loadStimulus(const std::string stimulusPath)
         stimuliSource = stimulusPath;
         stimuliSet = true;
 
+        pManager->setStimuliSource(stimuliSource);
+        pManager->setVideoInfo(videoInfo);
+
         return true;
     } catch (SlitScanVideoError &error) {
         QMessageBox::critical(this, ("Loading video not possible:"), QString("Error while loading : ") + QString::fromStdString(stimulusPath));
@@ -711,67 +721,54 @@ bool MainWindow::loadStimulus(const std::string stimulusPath)
     return false;
 }
 
+
+void MainWindow::asyncParticipantsLoadedFinished()
+{
+    for(auto data : pManager->getParticipants()) {
+        this->participants.push_back(data);
+        checkedParticipants.push_back(data);
+
+        addSlitScan(data.imgSlitscan, data.id, checkedParticipants.size() - 1);
+
+        QTreeWidgetItem *participant = new QTreeWidgetItem();
+        int percantageOfValidSamples = int(100 * getPercantageOfValidSamples(data.exportData));
+
+        QPixmap pix(20, 20);
+        QPainter painter(&pix);
+
+        painter.setBrush(participants.back().color);
+        painter.drawRect(0, 0, 20, 20);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        participant->setIcon(0, QIcon(pix));
+        participant->setCheckState(0, Qt::Checked);
+        //participant->setText(0, info.baseName() + " (" + QString::number(percantageOfValidSamples) + "%)");
+        participant->setText(0, data.id + " (" + QString::number(percantageOfValidSamples) + "%)");
+        pariticpantItems.append(participant);
+        ui->participantsTree->addTopLevelItems(pariticpantItems);
+
+    }
+
+    ui->nofViewersLabel->setText(QString::number(pariticpantItems.size()) + " Viewers");
+    ui->slitscanView->viewport()->update();
+
+    clearHistoryList();
+    createSlitScanMiniMap();
+}
+
 void MainWindow::addParticipant()
 {
     QStringList filePathList = QFileDialog::getOpenFileNames(this, tr("Add Participant"), "/home/maurice/Downloads", tr("Tab-Seperated Files (*.tsv)"));
 
-    QProgressDialog progress("Load Participant Data ... ", QString(), 0, filePathList.size(), this);
-    progress.setWindowModality(Qt::WindowModal);
-    progress.setValue(0);
+    pManager->setFilePathList(filePathList);
 
-    int atFileIndex = 0;
-
-    try {
-        for(auto filePath : filePathList) {
-            QFileInfo info(filePath);
-
-            progress.setValue(atFileIndex);
-            progress.setLabelText("Load : " + filePath);
-            QCoreApplication::processEvents();
-
-            QString label = info.baseName().split("-").first();
-
-            if (label.length() > 5) {
-                label = label.left(5);
-            }
-
-            Participant data = Participant(dynamicAOIs, videoInfo, stimuliSource);
-            data.load(info.absoluteFilePath().toStdString(), label.toStdString(), participants.size(), slitscanHeight);
-            std::cout << " Add Participant - " << participants.size() << " : " << label.toStdString() << std::endl;
-
-            participants.push_back(data);
-            checkedParticipants.push_back(data);
-
-            addSlitScan(data.imgSlitscan, label, checkedParticipants.size() - 1);
-
-            QTreeWidgetItem *participant = new QTreeWidgetItem();
-            int percantageOfValidSamples = int(100 * getPercantageOfValidSamples(data.exportData));
-
-            QPixmap pix(20, 20);
-            QPainter painter(&pix);
-
-            painter.setBrush(participants.back().color);
-            painter.drawRect(0, 0, 20, 20);
-            painter.setRenderHint(QPainter::Antialiasing);
-
-            participant->setIcon(0, QIcon(pix));
-            participant->setCheckState(0, Qt::Checked);
-            participant->setText(0, info.baseName() + " (" + QString::number(percantageOfValidSamples) + "%)");
-            pariticpantItems.append(participant);
-            ui->participantsTree->addTopLevelItems(pariticpantItems);
-
-            atFileIndex++;
-        }
-
-        progress.setValue(atFileIndex+1);
-
-        ui->nofViewersLabel->setText(QString::number(pariticpantItems.size()) + " Viewers");
-        ui->slitscanView->viewport()->update();
-    } catch(std::invalid_argument ex) {
-        QMessageBox::critical(this, ("Import of viewer not possible"), ex.what());
-    }
-    clearHistoryList();
-    createSlitScanMiniMap();
+    pManager->moveToThread(&workerThread);
+    QObject::connect(&workerThread, &QThread::started, pManager, &ParticipantManager::load);
+    QObject::connect(pManager, &ParticipantManager::finished, this, &MainWindow::asyncParticipantsLoadedFinished);
+    QObject::connect(pManager, &ParticipantManager::finished, &workerThread, &QThread::quit);
+    //QObject::connect(&workerThread, &QThread::finished, &workerThread, &QThread::deleteLater);
+    workerThread.start();
+    std::cout << "NOW I CAN WAIT -----------------<<<<<<--------" << std::endl;
 }
 
 QPair<int, int> MainWindow::getHandleSpanXRange()
@@ -1108,7 +1105,6 @@ void MainWindow::exportSlitscans()
         QPair<int, int> xRange = getHandleSpanXRange();
         //bool full = ui->modeSelector->currentIndex() == 1;
         bool full = false;
-
 
         for(const auto &item : checkedParticipants) {
             auto matSlitscan = full ? item.matVC123.clone() : item.matVC123(cv::Rect(xRange.first,0,xRange.second-xRange.first, item.matVC123.rows)).clone();

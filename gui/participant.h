@@ -8,6 +8,7 @@ class Participant
 public:
 
     Participant(std::vector<struct DynamicAOI> &dynamicAOIs, VideoInfo info, std::string stimuliSource);
+    Participant();
     void load(const std::string &absoluteFilePath, const std::string &label, int n, int slitScanHeight);
 private:
     std::vector<struct DynamicAOI> dynamicAOIs;

@@ -17,6 +17,7 @@
 #include <QFileDialog>
 #include <QPixmap>
 #include <QImage>
+#include <QThread>
 #include <QMenu>
 #include <QGraphicsLinearLayout>
 
@@ -32,6 +33,7 @@
 #include "constants.h"
 #include "representationview.h"
 #include "participant.h"
+#include "participantmanager.h"
 
 
 namespace Ui {
@@ -52,6 +54,7 @@ public:
 public slots:
 
 
+    void asyncParticipantsLoadedFinished();
     void dendrogramSubtreeActivated(QStringList leafIds);
 
     void matrixOptionChanged();
@@ -140,6 +143,9 @@ private:
     QString getMeasureTitle(SimilarityMeasure measure);
     void filterStates();
 private:
+    QThread workerThread;
+    ParticipantManager *pManager;
+
     Ui::MainWindow *ui;
     QMenu *contextMenu;
 

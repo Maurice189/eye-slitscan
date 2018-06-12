@@ -46,7 +46,7 @@ SlitscanVideo::SlitscanVideo(int width, int height, QGraphicsItem *parent) : QGr
     effect->setOffset(0);
     effect->setBlurRadius(50);
 
-    this->setGraphicsEffect(effect);
+    //this->setGraphicsEffect(effect);
 
 }
 
