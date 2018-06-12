@@ -754,6 +754,12 @@ void MainWindow::asyncParticipantsLoadedFinished()
 
     clearHistoryList();
     createSlitScanMiniMap();
+
+    if (workerThread.isFinished()) {
+        std::cout << "HAS FINSIHED" << std::endl;
+    } else {
+        std::cout << "HAS NOT FINSIHED !!!!!!!!!!!!!!" << std::endl;
+    }
 }
 
 void MainWindow::addParticipant()
